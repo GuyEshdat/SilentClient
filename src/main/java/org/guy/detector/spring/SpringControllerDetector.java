@@ -3,12 +3,11 @@ package org.guy.detector.spring;
 import org.guy.annotations.GenerateClient;
 import org.guy.detector.ControllerDetector;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.processing.RoundEnvironment;
 import javax.lang.model.element.Element;
-import javax.lang.model.type.TypeMirror;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -30,7 +29,7 @@ public class SpringControllerDetector implements ControllerDetector {
 
     private Set<Element> getAllControllers(Set<? extends Element> rootElements) {
         return rootElements.stream()
-                .filter(element -> nonNull(element.getAnnotation(RestController.class)))
+                .filter(element -> nonNull(element.getAnnotation(RestController.class)) || nonNull(element.getAnnotation(Controller.class)))
                 .collect(Collectors.toSet());
     }
 
